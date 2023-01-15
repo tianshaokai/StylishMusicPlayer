@@ -9,8 +9,9 @@ import android.graphics.*;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
-import android.support.v4.view.ViewCompat;
+import androidx.core.view.ViewCompat;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import io.github.ryanhoo.music.BuildConfig;
@@ -21,9 +22,9 @@ import io.github.ryanhoo.music.BuildConfig;
  * Date: 9/6/16
  * Time: 11:39 PM
  * Desc: AlbumImageView
- * Referenced {@link android.support.v4.widget.SwipeRefreshLayout}'s implementation.
+ * Referenced {@link androidx.swiperefreshlayout.widget.SwipeRefreshLayout}'s implementation.
  */
-public class AlbumImageView extends ImageView {
+public class AlbumImageView extends androidx.appcompat.widget.AppCompatImageView {
 
     // private static final String TAG = "AlbumImageView";
 
@@ -64,7 +65,7 @@ public class AlbumImageView extends ImageView {
     private static final String COPY_RIGHT = "Ryan Hoo ©2016";
     @SuppressLint("DefaultLocale")
     private static final String BUILD = String.format("build release %s-%d (%s)",
-            BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE, BuildConfig.FLAVOR);
+            BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE, System.currentTimeMillis());
 
     // Animation
     private ObjectAnimator mRotateAnimator;
@@ -83,13 +84,6 @@ public class AlbumImageView extends ImageView {
         init();
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @SuppressWarnings("unused")
-    public AlbumImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
     private void init() {
         mDensity = getContext().getResources().getDisplayMetrics().density;
         final int shadowXOffset = (int) (mDensity * X_OFFSET);
@@ -104,7 +98,7 @@ public class AlbumImageView extends ImageView {
         } else {
             OvalShape oval = new OvalShadow(mShadowRadius);
             circle = new ShapeDrawable(oval);
-            ViewCompat.setLayerType(this, ViewCompat.LAYER_TYPE_SOFTWARE, circle.getPaint());
+            ViewCompat.setLayerType(this, View.LAYER_TYPE_SOFTWARE, circle.getPaint());
             circle.getPaint().setShadowLayer(mShadowRadius, shadowXOffset, shadowYOffset, KEY_SHADOW_COLOR);
             final int padding = mShadowRadius;
             // set padding so the inner image sits correctly within the shadow.

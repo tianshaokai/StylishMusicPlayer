@@ -11,12 +11,12 @@
         android:layout_height="wrap_content"
         >
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             style="@style/MP.Theme.Widget.Toolbar"
             />
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         xmlns:recyclerView="http://schemas.android.com/apk/res-auto"
         style="@style/MP.Theme.Widget.RecyclerView"
         android:paddingTop="@dimen/mp.padding.large"

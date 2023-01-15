@@ -1,13 +1,18 @@
 package io.github.ryanhoo.music.ui.local.all;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.ryanhoo.music.R;
@@ -53,6 +58,7 @@ public class AllLocalMusicFragment extends BaseFragment implements LocalMusicCon
         return inflater.inflate(R.layout.fragment_all_local_music, container, false);
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -71,7 +77,17 @@ public class AllLocalMusicFragment extends BaseFragment implements LocalMusicCon
 
         fastScroller.setRecyclerView(recyclerView);
 
-        new LocalMusicPresenter(AppRepository.getInstance(), this).subscribe();
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.Group.STORAGE)
+                .onGranted(permissions -> {
+                    // Storage permission are allowed.
+                    new LocalMusicPresenter(AppRepository.getInstance(), this).subscribe();
+                })
+                .onDenied(permissions -> {
+                    // Storage permission are not allowed.
+                })
+                .start();
     }
 
     // RxBus Events

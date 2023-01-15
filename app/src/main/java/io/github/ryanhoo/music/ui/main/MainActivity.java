@@ -1,9 +1,11 @@
 package io.github.ryanhoo.music.ui.main;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.Toolbar;
+
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
+
 import android.widget.RadioButton;
 import butterknife.BindView;
 import butterknife.BindViews;
